@@ -1,5 +1,20 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+
+const GlobalCss = createGlobalStyle`
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+`;
 
 const Container = styled.div`
   min-height: 100vh;
@@ -27,10 +42,13 @@ const DateInput = styled.input.attrs({ type: "date" })`
 
 function App() {
   return (
-    <Container>
-      <Headline>Welcome.</Headline>
-      <DateInput />
-    </Container>
+    <>
+      <GlobalCss />
+      <Container>
+        <Headline>Welcome.</Headline>
+        <DateInput />
+      </Container>
+    </>
   );
 }
 
