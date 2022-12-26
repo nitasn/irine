@@ -1,6 +1,13 @@
 import React from "react";
 import { format_as_yyyyMMdd } from "./utils";
-import { GlobalCss, Container, Headline, DateInput, AnswerText } from "./style";
+import {
+  GlobalCss,
+  Container,
+  Headline,
+  DateInput,
+  AnswerText,
+  Spacer,
+} from "./style";
 
 const baseDate = "Nov 27 2022";
 const datesPattern = [0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1];
@@ -49,6 +56,7 @@ function App() {
           onChange={(event) => setDate(new Date(event.target.value))}
         />
         <Answer withIrine={isWithIrine(date)} />
+        <Spacer />
       </Container>
     </>
   );

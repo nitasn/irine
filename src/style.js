@@ -19,6 +19,7 @@ export const GlobalCss = createGlobalStyle`
 
   *, *::before, *::after {
     box-sizing: border-box;
+    margin: 0;
   }
 `;
 
@@ -27,23 +28,25 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  gap: 30px;
 `;
 
 export const Headline = styled.h1`
-  font-size: 2rem;
+  font-size: 1.5rem;
+  margin-bottom: 45px;
+  color: rgb(0 0 0 /0.8);
 `;
 
 export const DateInput = styled.input.attrs({ type: "date" })`
   width: 250px;
-  height: 30px;
-  margin-bottom: 30px;
-  margin-top: 50px;
-  padding: 15px;
+  height: 45px;
   background-color: white;
   color: black;
   border: 2px solid #677788;
-  border-radius: 5;
+  border-radius: 5px;
   font-size: 20px;
+  text-align: center;
 `;
 
 const answerColor = {
@@ -53,11 +56,15 @@ const answerColor = {
 };
 
 export const AnswerText = styled.p`
-  font-size: 20px;
+  font-size: 1.45rem;
 
   strong {
     font-weight: bold;
   }
 
   color: ${(props) => answerColor[props.variant]};
+`;
+
+export const Spacer = styled.div`
+  height: 30vh;
 `;
