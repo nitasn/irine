@@ -15,6 +15,14 @@ export const GlobalCss = createGlobalStyle`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    background-color: ${({ withIrine: [err, answer] }) =>
+      err
+        ? "rgb(204, 204, 204)"
+        : answer
+        ? "#f0fff0"
+        : "#ffd6d6"
+    };
   }
 
   *, *::before, *::after {
@@ -50,8 +58,8 @@ export const DateInput = styled.input.attrs({ type: "date" })`
 `;
 
 const answerColor = {
-  yes: "green",
-  no: "maroon",
+  yes: "rgb(0 50 0 / 0.8)",
+  no: "rgb(40 0 0 / 0.8)",
   error: "gray",
 };
 
