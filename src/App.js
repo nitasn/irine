@@ -1,52 +1,54 @@
 import React from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import { format_as_yyyyMMdd } from "./utils";
+import { GlobalCss, Container, Headline, DateInput, AnswerText } from "./style";
 
-const GlobalCss = createGlobalStyle`
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+const baseDate = "Nov 27 2022";
+const datesPattern = [0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1];
 
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-`;
+/**
+ * @param {Date} date
+ * @returns {[Error | null, boolean | null]}
+ */
+function isWithIrine(date) {
+  const diffInMs = date - new Date(baseDate);
 
-const Container = styled.div`
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  gap: 15px;
-`;
+  if (diffInMs < 0)
+    return [new Error(`Cannot do dates before ${baseDate}`), null];
 
-const Headline = styled.h1`
-  font-size: 2rem;
-`;
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const diffInDays = Math.floor(diffInMs / msPerDay);
+  return [null, datesPattern[diffInDays % 14] === 1];
+}
 
-const DateInput = styled.input.attrs({ type: "date" })`
-  width: 250px;
-  height: 30px;
-  margin-bottom: 30px;
-  margin-top: 50px;
-  padding: 15px;
-  background-color: white;
-  color: black;
-  border: 2px solid #677788;
-  border-radius: 5;
-  font-size: 20px;
-`;
+function Answer({ withIrine }) {
+  const [err, boolean] = withIrine;
+
+  return err ? (
+    <AnswerText variant="error">{err.message}</AnswerText>
+  ) : boolean ? (
+    <AnswerText variant="yes">
+      <strong>Yes</strong>, it's with Irine.
+    </AnswerText>
+  ) : (
+    <AnswerText variant="no">
+      <strong>No</strong>, it's without Irine.
+    </AnswerText>
+  );
+}
 
 function App() {
+  const [date, setDate] = React.useState(() => new Date());
+
   return (
     <>
       <GlobalCss />
       <Container>
-        <Headline>Welcome.</Headline>
-        <DateInput />
+        <Headline>Is this Date with Irine?</Headline>
+        <DateInput
+          value={format_as_yyyyMMdd(date)}
+          onChange={(event) => setDate(new Date(event.target.value))}
+        />
+        <Answer withIrine={isWithIrine(date)} />
       </Container>
     </>
   );

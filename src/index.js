@@ -10,4 +10,5 @@ root.render(
   </React.StrictMode>
 );
 
+// work offline!
 serviceWorkerRegistration.register();
